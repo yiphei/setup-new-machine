@@ -22,10 +22,5 @@ fi
 mkdir -p "$DEST_DIR"
 cp "$SRC_DIR/config" "$DEST_DIR/config"
 
-if [[ -d "$SRC_DIR/themes" ]]; then
-  mkdir -p "$DEST_DIR/themes"
-  cp "$SRC_DIR/themes/"* "$DEST_DIR/themes/"
-fi
-
 echo "Ghostty config installed to $DEST_DIR"
 echo "Reload Ghostty (cmd+shift+,) or restart it to apply."
