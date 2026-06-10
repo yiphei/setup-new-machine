@@ -1,0 +1,5 @@
+theme = Abernathy
+font-family = Monaco
+font-size = 16
+bold-is-bright = true
+macos-titlebar-style = native
