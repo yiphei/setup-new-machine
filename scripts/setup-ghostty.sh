@@ -12,7 +12,13 @@ if [[ ! -f "$SRC_DIR/config" ]]; then
   exit 1
 fi
 
-# Back up an existing config before overwriting
+# Idempotent: skip if the installed config already matches
+if [[ -e "$DEST_DIR/config" ]] && cmp -s "$SRC_DIR/config" "$DEST_DIR/config"; then
+  echo "Ghostty config already up to date at $DEST_DIR — nothing to do."
+  exit 0
+fi
+
+# Back up an existing (different) config before overwriting
 if [[ -e "$DEST_DIR/config" ]]; then
   backup="$DEST_DIR/config.bak"
   echo "Backing up existing config to $backup"
