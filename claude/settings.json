@@ -1,0 +1,182 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "filesystem": {
+      "allowWrite": ["~/.cache/uv"]
+    },
+    "network": {
+      "allowLocalBinding": true,
+      "allowedDomains": [
+        "localhost",
+        "openrouter.ai"
+      ]
+    },
+    "excludedCommands": ["git:*", "gh:*", "just check", "just test"]
+  },
+  "effortLevel": "xhigh",
+  "permissions": {
+    "defaultMode": "auto",
+    "allow": [
+      "Glob",
+      "Grep",
+      "Read",
+      "Edit",
+      "Write",
+      "MultiEdit",
+      "Bash(git *)",
+      "Bash(just *)",
+      "Bash(make *)",
+      "Bash(uv *)",
+      "Bash(npm *)",
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(.venv/bin/python3 *)",
+      "Bash(pytest *)",
+      "Bash(ruff *)",
+      "Bash(basedpyright *)",
+      "Bash(gh *)",
+      "Bash(pre-commit *)",
+      "Bash(coverage *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(sed *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(echo *)",
+      "Bash(mkdir *)",
+      "Bash(touch *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(ls *)",
+      "Bash(tree *)",
+      "Bash(rm *)",
+      "Bash(jq *)",
+      "Bash(docker ps)",
+      "Bash(docker ps *)",
+      "Bash(docker images)",
+      "Bash(docker images *)",
+      "Bash(docker logs *)",
+      "Bash(docker inspect *)",
+      "Bash(docker stats *)",
+      "Bash(docker version)",
+      "Bash(docker info)",
+      "Bash(docker compose ps)",
+      "Bash(docker compose ps *)",
+      "Bash(docker compose ls)",
+      "Bash(docker compose ls *)",
+      "Bash(docker compose logs)",
+      "Bash(docker compose logs *)",
+      "Bash(docker compose config)",
+      "Bash(docker compose config *)",
+      "Bash(docker compose top)",
+      "Bash(docker compose top *)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:docs.python.org)",
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:packaging.python.org)",
+      "WebFetch(domain:docs.astral.sh)",
+      "WebFetch(domain:docs.pydantic.dev)",
+      "WebFetch(domain:logfire.pydantic.dev)",
+      "WebFetch(domain:docs.pytest.org)",
+      "WebFetch(domain:ai.pydantic.dev)",
+      "WebFetch(domain:duckdb.org)",
+      "WebFetch(domain:openrouter.ai)",
+      "WebFetch(domain:stackoverflow.com)"
+    ],
+    "ask": [
+      "Bash(npm publish *)",
+      "Bash(docker *)",
+      "Edit(Justfile)",
+      "Write(Justfile)",
+      "MultiEdit(Justfile)",
+      "Edit(justfile)",
+      "Write(justfile)",
+      "MultiEdit(justfile)",
+      "Edit(Makefile)",
+      "Write(Makefile)",
+      "MultiEdit(Makefile)"
+    ],
+    "deny": [
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(nc *)",
+      "Bash(netcat *)",
+      "Bash(nslookup *)",
+      "Bash(dig *)",
+      "Bash(ping *)",
+      "Bash(sudo *)",
+      "Bash(su *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+      "Bash(mkfs *)",
+      "Bash(dd *)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push * --force *)",
+      "Bash(git push * -f *)",
+      "Bash(git push --mirror *)",
+      "Bash(git push --delete *)",
+      "Bash(git push *+*)",
+      "Bash(git push * :*)",
+      "Bash(git clean -fdx *)",
+      "Bash(git clean -xffd *)",
+      "Bash(git reset --hard *)",
+      "Bash(ssh *)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Read(.envrc)",
+      "Edit(.envrc)",
+      "Read(./secrets/**)",
+      "Edit(./secrets/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/**)",
+      "Read(~/.gitconfig)"
+    ]
+  },
+  "env": {
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "128000"
+  },
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(rm *)",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-rm-tracked.sh\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Read|Edit|Write|MultiEdit|NotebookEdit|Grep|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/block-sibling-worktree.sh\""
+          }
+        ]
+      }
+    ],
+    "WorktreeCreate": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/create-worktree.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}
