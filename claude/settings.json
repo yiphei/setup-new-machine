@@ -12,7 +12,7 @@
         "openrouter.ai"
       ]
     },
-    "excludedCommands": ["git:*", "gh:*", "just check", "just test"]
+    "excludedCommands": ["git:*", "gh:*", "just check:*", "just test:*"]
   },
   "effortLevel": "xhigh",
   "permissions": {
@@ -23,7 +23,6 @@
       "Read",
       "Edit",
       "Write",
-      "MultiEdit",
       "Bash(git *)",
       "Bash(just *)",
       "Bash(make *)",
@@ -95,13 +94,10 @@
       "Bash(docker *)",
       "Edit(Justfile)",
       "Write(Justfile)",
-      "MultiEdit(Justfile)",
       "Edit(justfile)",
       "Write(justfile)",
-      "MultiEdit(justfile)",
       "Edit(Makefile)",
-      "Write(Makefile)",
-      "MultiEdit(Makefile)"
+      "Write(Makefile)"
     ],
     "deny": [
       "Bash(curl *)",
@@ -130,9 +126,19 @@
       "Bash(git reset --hard *)",
       "Bash(ssh *)",
       "Read(./.env)",
-      "Read(./.env.*)",
+      "Read(./.env.local)",
+      "Read(./.env.*.local)",
+      "Read(./.env.development)",
+      "Read(./.env.production)",
+      "Read(./.env.staging)",
+      "Read(./.env.test)",
       "Edit(./.env)",
-      "Edit(./.env.*)",
+      "Edit(./.env.local)",
+      "Edit(./.env.*.local)",
+      "Edit(./.env.development)",
+      "Edit(./.env.production)",
+      "Edit(./.env.staging)",
+      "Edit(./.env.test)",
       "Read(.envrc)",
       "Edit(.envrc)",
       "Read(./secrets/**)",
@@ -159,7 +165,7 @@
         ]
       },
       {
-        "matcher": "Bash|Read|Edit|Write|MultiEdit|NotebookEdit|Grep|Glob",
+        "matcher": "Bash|Read|Edit|Write|NotebookEdit|Grep|Glob",
         "hooks": [
           {
             "type": "command",
